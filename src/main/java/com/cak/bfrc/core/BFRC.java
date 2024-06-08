@@ -26,11 +26,12 @@ public class BFRC {
     }
     
     public static void showEnabledState() {
+        if (Minecraft.getInstance().player == null) return;
         Minecraft.getInstance().player.displayClientMessage(
-            Lang.translatable(BFRC.ID  + ".chat.toggle", ChatFormatting.GRAY, ChatFormatting.BOLD)
+            Lang.translatable(BFRC.ID + ".chat.toggle", ChatFormatting.GRAY, ChatFormatting.BOLD)
                 .append(Lang.literal(" "))
                 .append(BFRC.CURRENT_STATE.getStateComponent()),
-            true
+            false
         );
     }
     
