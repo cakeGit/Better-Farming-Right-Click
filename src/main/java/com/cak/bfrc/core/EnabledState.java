@@ -17,6 +17,10 @@ public enum EnabledState {
         this.color = color;
     }
     
+    public static EnabledState fromBool(Boolean currentlyEnabled) {
+        return currentlyEnabled ? ENABLED : DISABLED;
+    }
+    
     public MutableComponent getNameComponent() {
         return Lang.modTranslatable("enabled_state." + langName, color, ChatFormatting.BOLD);
     }

@@ -9,6 +9,6 @@ public interface ConfigAccessor {
     
     OptionInstance[] getOptions();
     
-    void save();
+    void triggerSave();
     
 }

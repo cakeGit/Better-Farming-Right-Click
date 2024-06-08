@@ -16,6 +16,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.util.ObfuscationReflectionHelper;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.lang.reflect.Field;
@@ -40,16 +41,15 @@ public class GameEvents {
         Minecraft.getInstance().gameMode.startDestroyBlock(pos, hitVecDirection);
     }
     
-    public static boolean isMainHandBlockInteractionActive = true;
-    public static boolean interactPressedLastTick = false;
+    public static InteractionHand lastInteractionHand = null;
+    public static InteractionHand lastUsedInteractionHand = InteractionHand.MAIN_HAND;
     
     private void tickNoCooldownInteractions() {
+        if (lastInteractionHand != null)
+            lastUsedInteractionHand = lastInteractionHand;
+        lastInteractionHand = null;
         
         if (!BFRC.CONFIG_ACCESSOR.noCooldownEnabled()) return;
-        
-        boolean previousInteractPressed = interactPressedLastTick;
-        interactPressedLastTick = Minecraft.getInstance().options.keyUse.isDown();
-        if (!previousInteractPressed) return;
         
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.gameMode == null) return;
@@ -57,14 +57,10 @@ public class GameEvents {
         
         if (!Minecraft.getInstance().options.keyUse.isDown()) return;
         
-        InteractionHand hand = isMainHandBlockInteractionActive ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-        
-        ItemStack stack = mc.player.getItemInHand(hand);
+        ItemStack stack = mc.player.getItemInHand(lastUsedInteractionHand);
         Item item = stack.getItem();
         
-        
-        if ((item instanceof BlockItem blockItem && blockItem.getBlock() instanceof CropBlock) ||
-            item instanceof HoeItem) {
+        if (isNoCooldownItem(item)) {
             try {
                 Field field = ObfuscationReflectionHelper.findField(Minecraft.class, "rightClickDelay");
                 field.setAccessible(true);
@@ -74,6 +70,15 @@ public class GameEvents {
             }
         }
         
+    }
+    
+    @SubscribeEvent
+    public void onInteractionKeyMappingTriggered(InputEvent.InteractionKeyMappingTriggered events) {
+        lastUsedInteractionHand = events.getHand();
+    }
+    
+    private boolean isNoCooldownItem(Item item) {
+        return (item instanceof BlockItem blockItem && blockItem.getBlock() instanceof CropBlock) || item instanceof HoeItem;
     }
     
     @SubscribeEvent

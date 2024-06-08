@@ -14,7 +14,7 @@ public class ConfigScreen extends SimpleOptionsSubScreen {
     
     @Override
     public void removed() {
-        BFRC.CONFIG_ACCESSOR.save();
+        BFRC.CONFIG_ACCESSOR.triggerSave();
     }
     
 }
