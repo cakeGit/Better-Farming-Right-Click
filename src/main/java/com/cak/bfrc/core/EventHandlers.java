@@ -38,6 +38,9 @@ public class EventHandlers {
     public static InteractionHand lastInteractionHand = null;
     public static InteractionHand lastUsedInteractionHand = InteractionHand.MAIN_HAND;
     
+    public static boolean noCooldownPeriodActive = false;
+    public static InteractionHand noCooldownPeriodHand = InteractionHand.MAIN_HAND;
+    
     public static void tickNoCooldownInteractions() {
         if (lastInteractionHand != null)
             lastUsedInteractionHand = lastInteractionHand;
@@ -49,12 +52,20 @@ public class EventHandlers {
         if (mc.level == null || mc.gameMode == null || mc.player == null) return;
         if (!mc.level.isClientSide) return;
         
-        if (!mc.options.keyUse.isDown()) return;
+        if (!mc.options.keyUse.isDown()) {
+            lastUsedInteractionHand = InteractionHand.MAIN_HAND;
+            noCooldownPeriodHand = InteractionHand.MAIN_HAND;
+            noCooldownPeriodActive = false;
+            return;
+        }
         
-        ItemStack stack = mc.player.getItemInHand(lastUsedInteractionHand);
+        InteractionHand hand = noCooldownPeriodActive ? noCooldownPeriodHand : lastUsedInteractionHand;
+        ItemStack stack = mc.player.getItemInHand(hand);
         Item item = stack.getItem();
         
         if (isNoCooldownItem(item)) {
+            noCooldownPeriodActive = true;
+            noCooldownPeriodHand = hand;
             try {
                 Field field = PlatformReflectionHelper.findField(Minecraft.class, "rightClickDelay");
                 field.setAccessible(true);
