@@ -18,6 +18,11 @@ public class ConfigOptions {
         rightClickHarvestEnabledOption =  OptionInstance.createBoolean("options.right_click_harvest_enabled", BFRC.CONFIG_ACCESSOR.rightClickHarvestEnabled());
         enableOnStartupOption =  OptionInstance.createBoolean("options.enable_on_startup", BFRC.CONFIG_ACCESSOR.enabledOnStartup());
         currentlyEnabledOption =  OptionInstance.createBoolean("options.currently_enabled", BFRC.CONFIG_ACCESSOR.enabledOnStartup());
+        
+        ALL_OPTIONS = new OptionInstance[] {
+            currentlyEnabledOption, enableOnStartupOption,
+            noCooldownEnabledOption, rightClickHarvestEnabledOption,
+        };
     }
     
     
