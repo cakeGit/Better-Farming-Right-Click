@@ -1,6 +1,9 @@
 package com.cak.bfrc.platform;
 
 import com.cak.bfrc.core.BFRC;
+import com.cak.bfrc.platform.config.ConfigScreenFactory;
+import com.cak.bfrc.platform.config.NeoForgeModConfig;
+import com.cak.bfrc.platform.event.GameEvents;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -9,6 +12,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.function.Consumer;
 
@@ -33,17 +37,19 @@ public class NeoForgeMod {
     }
     
     public static void onServerStartup(FMLDedicatedServerSetupEvent event) {
-        LOGGER.info("This is a client side mod! Disabling...");
+        LOGGER.info("This is a client side mod! Going to sleep...");
     }
     
     public static void onClientStartup(FMLClientSetupEvent event) {
         LOGGER.info("Hello from client!");
         
+        //Platform setup
         NeoForgeControls.init();
+        registerListener(new GameEvents());
         
-        BFRC.setup(new NeoForgeGameEventListener());
+        //Core setup
+        BFRC.setup();
         
-        NeoForgeModConfig.buildOptions();
     }
     
     public static void registerModBusListener(Object listener) {
@@ -53,5 +59,14 @@ public class NeoForgeMod {
     public static <T extends Event> void addModBusListener(Consumer<T> consumer) {
         modEventBus.addListener(consumer);
     }
+    
+    public static void registerListener(Object listener) {
+        NeoForge.EVENT_BUS.register(listener);
+    }
+    
+    public static <T extends Event > void addListener(Consumer<T> consumer) {
+        NeoForge.EVENT_BUS.addListener(consumer);
+    }
+    
     
 }

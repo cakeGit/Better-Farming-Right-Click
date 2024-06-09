@@ -17,7 +17,7 @@ public enum EnabledState {
         this.color = color;
     }
     
-    public static EnabledState fromBool(Boolean currentlyEnabled) {
+    public static EnabledState byBool(Boolean currentlyEnabled) {
         return currentlyEnabled ? ENABLED : DISABLED;
     }
     

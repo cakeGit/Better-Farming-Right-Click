@@ -9,7 +9,7 @@ import net.minecraft.client.gui.screens.SimpleOptionsSubScreen;
 public class ConfigScreen extends SimpleOptionsSubScreen {
     
     public ConfigScreen(Screen pLastScreen, Options pOptions) {
-        super(pLastScreen, pOptions, Lang.modTranslatable("gui", "config_screen.title"), BFRC.CONFIG_ACCESSOR.getOptions());
+        super(pLastScreen, pOptions, Lang.modTranslatable("gui", "config_screen.title"), ConfigOptions.ALL_OPTIONS);
     }
     
     @Override

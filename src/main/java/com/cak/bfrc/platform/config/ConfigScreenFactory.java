@@ -1,4 +1,4 @@
-package com.cak.bfrc.platform;
+package com.cak.bfrc.platform.config;
 
 import com.cak.bfrc.core.config.ConfigScreen;
 import net.minecraft.client.Minecraft;

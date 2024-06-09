@@ -1,8 +1,7 @@
 package com.cak.bfrc.core;
 
 import com.cak.bfrc.core.config.ConfigAccessor;
-import com.cak.bfrc.core.event.GameEventRegisterer;
-import com.cak.bfrc.core.event.GameEvents;
+import com.cak.bfrc.core.config.ConfigOptions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -19,9 +18,10 @@ public class BFRC {
     
     public static ConfigAccessor CONFIG_ACCESSOR;
     
-    public static void setup(GameEventRegisterer eventRegisterer) {
+    public static void setup() {
         
-        eventRegisterer.registerListener(new GameEvents());
+        CURRENT_STATE = EnabledState.byBool(CONFIG_ACCESSOR.enabledOnStartup());
+        ConfigOptions.buildOptions();
         
     }
     

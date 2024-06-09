@@ -3,7 +3,7 @@
   "better_farming_right_click.enabled_state.on": "ENC.",
   "better_farming_right_click.enabled_state.off": "APA.",
   "gui.better_farming_right_click.config_screen.title": "Opciones de Mejor Cultivando Clic Derecho",
-  "options.right_click_harvest": "Clic Derecho Cosecho",
+  "options.right_click_harvest_enabled": "Clic Derecho Cosecho",
   "options.no_cooldown_enabled": "No enfriamiento de la herramienta / semilla",
   "options.startup_enabled": "Activado al incio",
   "options.currently_enabled": "Activado"
