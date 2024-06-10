@@ -11,7 +11,8 @@ public class GameEvents {
     
     @SubscribeEvent
     public void onInteractionKeyMappingTriggered(InputEvent.InteractionKeyMappingTriggered events) {
-        EventHandlers.lastInteractionHand = events.getHand();
+        if (events.isUseItem())
+            EventHandlers.lastInteractionHand = events.getHand();
     }
     
     @SubscribeEvent

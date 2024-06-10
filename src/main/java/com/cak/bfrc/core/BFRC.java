@@ -12,13 +12,15 @@ public class BFRC {
     public static final Logger LOGGER = LogUtils.getLogger();
     
     public static final String ID = "better_farming_right_click";
-    public static String CURRENT_PLATFORM;
+    public static String CURRENT_PLATFORM = "unknown";
     
     public static EnabledState CURRENT_STATE = EnabledState.ENABLED;
     
     public static ConfigAccessor CONFIG_ACCESSOR;
     
     public static void setup() {
+        
+        LOGGER.info("BFRC initialising on platform " + CURRENT_PLATFORM);
         
         CURRENT_STATE = EnabledState.byBool(CONFIG_ACCESSOR.enabledOnStartup());
         ConfigOptions.buildOptions();
