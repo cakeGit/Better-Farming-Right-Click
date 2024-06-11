@@ -25,6 +25,7 @@ public class FabricConfig implements ConfigAccessor {
     @Override
     public void triggerSave() {
         BFRC.CURRENT_STATE = EnabledState.byBool(ConfigOptions.currentlyEnabledOption.getValue());
+        BFRC.showEnabledState();
     }
     
 }
