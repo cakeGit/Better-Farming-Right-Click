@@ -1,0 +1,10 @@
+{
+  "better_farming_right_click.chat.toggle": "Better Farming Right Click",
+  "better_farming_right_click.enabled_state.on": "ON",
+  "better_farming_right_click.enabled_state.off": "OFF",
+  "gui.better_farming_right_click.config_screen.title": "Better Farming Right Click Options",
+  "options.right_click_harvest_enabled": "Right click harvest",
+  "options.no_cooldown_enabled": "No tool / seed cooldown",
+  "options.enable_on_startup": "Enable on startup",
+  "options.currently_enabled": "Enabled"
+}

@@ -4,9 +4,8 @@ public interface ConfigAccessor {
     
     boolean noCooldownEnabled();
     boolean rightClickHarvestEnabled();
+    boolean enabledOnStartup();
     
     void triggerSave();
-    
-    boolean enabledOnStartup();
     
 }

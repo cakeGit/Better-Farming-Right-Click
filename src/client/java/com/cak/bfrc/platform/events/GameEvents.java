@@ -1,15 +1,15 @@
 package com.cak.bfrc.platform.events;
 
+import com.cak.bfrc.core.BFRC;
+import com.cak.bfrc.core.EnabledState;
 import com.cak.bfrc.core.EventHandlers;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class GameEvents {
@@ -25,10 +25,12 @@ public class GameEvents {
     }
     
     private static void onClientTick(MinecraftClient minecraftClient) {
-        EventHandlers.tickNoCooldownInteractions();
+        if (BFRC.CURRENT_STATE == EnabledState.ENABLED)
+            EventHandlers.tickNoCooldownInteractions();
     }
     private static ActionResult onRightClickBlock(PlayerEntity playerEntity, World world, Hand hand, BlockHitResult blockHitResult) {
-        EventHandlers.tryRightClickHarvest(world, playerEntity.getStackInHand(hand), blockHitResult.getBlockPos(), blockHitResult.getSide());
+        if (BFRC.CURRENT_STATE == EnabledState.ENABLED)
+            EventHandlers.tryRightClickHarvest(world, playerEntity.getStackInHand(hand), blockHitResult.getBlockPos(), blockHitResult.getSide());
         return ActionResult.PASS;
     }
     
