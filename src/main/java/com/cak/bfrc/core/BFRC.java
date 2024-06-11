@@ -33,7 +33,7 @@ public class BFRC {
             Lang.translatable(BFRC.ID + ".chat.toggle", ChatFormatting.GRAY, ChatFormatting.BOLD)
                 .append(Lang.literal(" "))
                 .append(BFRC.CURRENT_STATE.getStateComponent()),
-            false
+            true
         );
     }
     

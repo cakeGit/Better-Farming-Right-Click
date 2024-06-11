@@ -1,5 +1,7 @@
 package com.cak.bfrc.platform.event;
 
+import com.cak.bfrc.core.BFRC;
+import com.cak.bfrc.core.EnabledState;
 import com.cak.bfrc.core.EventHandlers;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,12 +19,14 @@ public class GameEvents {
     
     @SubscribeEvent
     public void onClientTick(ClientTickEvent.Pre event) {
-        EventHandlers.tickNoCooldownInteractions();
+        if (BFRC.CURRENT_STATE == EnabledState.ENABLED)
+            EventHandlers.tickNoCooldownInteractions();
     }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        EventHandlers.tryRightClickHarvest(event.getLevel(), event.getItemStack(), event.getPos(), event.getHitVec().getDirection());
+        if (BFRC.CURRENT_STATE == EnabledState.ENABLED)
+            EventHandlers.tryRightClickHarvest(event.getLevel(), event.getItemStack(), event.getPos(), event.getHitVec().getDirection());
     }
     
 }
