@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "better_farming_right_click",
+	"version": "${version}",
+	"name": "Better Farming Right Click",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Cak"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/better-farming-right-click",
+		"issues": "https://github.com/cakeGit/Better-Farming-Right-Click/issues",
+		"sources": "https://github.com/cakeGit/Better-Farming-Right-Click-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.cak.bfrc.platform.FabricMod"
+		]
+	},
+	"mixins": [
+		{
+			"config": "better_farming_right_click.client.mixin.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.2",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
