@@ -2,12 +2,12 @@ package com.cak.bfrc.core;
 
 import com.cak.bfrc.platform.MinecraftClientAccessors;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
+import net.minecraft.block.NetherWartBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -22,17 +22,20 @@ public class EventHandlers {
         
         if (!level.isClient) return;
         if (mc.interactionManager == null) return;
-        
-        if (!(stack.getItem() instanceof BlockItem blockItem)) return;
-        if (!(blockItem.getBlock() instanceof CropBlock heldCropBlock)) return;
-        
+
         BlockState clickedState = level.getBlockState(pos);
-        
-        if (!(clickedState.getBlock() instanceof CropBlock cropBlock)) return;
-        if (heldCropBlock != cropBlock) return;
-        if (!cropBlock.isMature(clickedState)) return;
-        
-        mc.interactionManager.attackBlock(pos, hitVecDirection);
+        if (clickedState.getBlock() == Blocks.NETHER_WART && clickedState.get(NetherWartBlock.AGE) >= 3) {
+            if (stack.getItem() == Items.NETHER_WART) {
+                mc.interactionManager.attackBlock(pos, hitVecDirection);
+            }
+        }
+        if (clickedState.getBlock() instanceof CropBlock clickedCropBlock) {
+            if (stack.getItem() instanceof BlockItem heldBlockItem) {
+                if (heldBlockItem.getBlock() == clickedCropBlock && clickedCropBlock.isMature(clickedState)) {
+                    mc.interactionManager.attackBlock(pos, hitVecDirection);
+                }
+            }
+        }
     }
     
     public static Hand lastInteractionHand = null;
@@ -73,7 +76,9 @@ public class EventHandlers {
     }
     
     private static boolean isNoCooldownItem(Item item) {
-        return (item instanceof BlockItem blockItem && blockItem.getBlock() instanceof CropBlock) || item instanceof HoeItem;
+        if (item instanceof BlockItem blockItem) {
+            if (blockItem.getBlock() instanceof CropBlock || blockItem.getBlock() instanceof NetherWartBlock) return true;
+        }
+        return item instanceof HoeItem;
     }
-    
 }
